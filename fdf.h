@@ -30,15 +30,15 @@
 # include <stdarg.h>
 # include <math.h>
 
-typedef struct  s_vars {
+typedef struct  s_parse {
+
+    int         width;
+    int         height;
+	int 		**punto;
+    
     void        *mlx;
     void        *win;
-}               t_vars;
-
-typedef struct  s_parse {
-	char		*map;
-	char		**punto;
-}               t_parse;
+}               parse;
 
 int 				read_file(char *path);
 int					get_next_line(int fd, char **line);

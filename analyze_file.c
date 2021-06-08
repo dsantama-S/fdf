@@ -12,51 +12,81 @@
 
 #include "fdf.h"
 
-static void		coordenadas(t_parse *parse)
+static void		define_height(char *path)
 {
-}
+	char 	*line;
+	int		fd;
+	int		lines;
 
-static void		define_map(int fd, t_parse *parse)
-{
-	char	*map;
-	char	*aux;
-	char	*aux2;
-	char	*aux3;
-	char	*line;
-
-	map = ft_strdup("");
-	while (get_next_line(fd, &line) != 0)
-	{
-		aux = ft_strjoin(map, line);
-		free(map);
-		map = aux;
-		aux2 = ft_strjoin(map, "\n");
-		free(map);
-		map = aux2;
-	}
-	aux3 = ft_strjoin(map, line);
-	free(map);
-	map = aux3;
-	close(fd);
-	parse->map = map;
-}
-
-int 			read_file(char *path)
-{
-	int			fd;
-	t_parse		*parse;
-	
-	parse = ((t_parse *)malloc(sizeof(t_parse)));
-	if (!parse)
-		return (0);
-	fd = open(path, O_RDONLY);
+	lines = 0;
+	fd = open(path, O_RDONLY, 0);
 	if (fd == -1)
 	{
 		printf("*** Introduce correctamente el archivo ***\n");
 		return (-1);
 	}
-	define_map(fd, parse);
-	coordenadas(parse);
-	free(parse);
-	return (0);
+	while(get_next_line(fd, &line))
+	{
+		lines++;
+		free(line);
+	}
+	close(fd);
+	return(lines);
+}
+
+static int		define_width(char *path)
+{
+	char 	*line;
+	int		fd;
+	int		x;
+
+	x = 0;
+	fd = open(path, O_RDONLY, 0);
+	if (fd == -1)
+		return(-1);
+	get_next_line(fd, &line);
+	x = ft_counter(line, ' ');
+	close(fd);
+	return(x);
+}
+static void		get_map(int	*z, char *line)
+{
+	char **nums;
+	int		i;
+
+	i = 0;
+	nums = ft_strsplit(line, ' ');
+	while(nums[i])
+	{
+		z[i] = ft_atoi(nums[i]);
+		free(nums[i]);
+		i++;
+	}
+	free(nums);
+}
+
+void 			read_file(char *path, parse *parse)
+{
+	int			fd;
+	char		*line;
+	int			i;
+	
+	i = 0;
+	parse->height = define_height(path);
+	parse->width = define_width(path);
+	parse->punto = (int **)malloc(sizeof(int*) * (data->height + 1));
+	while(i <= parse->height)
+		parse->punto[i++] = (int *)malloc(sizeof(int) * (data->width + 1));
+	i = 0;
+	fd = open(path, O_RDONLY, 0);
+	if (fd == -1)
+		return(-1);
+	while(get_next_line(fd, &line))
+	{
+		get_map(parse->punto[i], line);
+		free(line);
+		i++;
+	}
+	parse->punto[i] = NULL;
+	close(fd);
 }

@@ -76,4 +76,6 @@ char				*ft_substr(char const *s, unsigned int start,
 int					ft_tolower(int i);
 int					ft_istrdigit(char *str);
 int					ft_toupper(int i);
+int					ft_counter(char const *str, char c);
+char				**ft_strsplit(const char *str, char c);
 #endif
