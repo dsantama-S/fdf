@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 10:50:01 by dsantama          #+#    #+#             */
-/*   Updated: 2021/06/14 11:10:46 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/06/14 12:42:57 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct  s_parse {
     int         width;
     int         height;
 	int 		**punto;
-    
+    int			aumento;
     void        *mlx;
     void        *win;
 }               t_parse;
@@ -50,6 +50,6 @@ typedef struct  s_imgs {
 
 int 				read_file(char *path, t_parse *parse);
 int					get_next_line(int fd, char **line);
-void 				puntos(float x, float y, float x1, float y1, t_parse *parse);
-
+void 				unir_puntos(float x, float y, float x1, float y1, t_parse *parse);
+void				print_puntos(t_parse *parse);
 #endif
