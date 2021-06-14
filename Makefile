@@ -1,5 +1,5 @@
 LIB		=	fdf.h
-SRCS	=	main.c analyze_file.c get_next_line.c
+SRCS	=	main.c analyze_file.c get_next_line.c algoritmo.c
 			
 OBJS	=	$(SRCS:.c=.o)
 NAME	=	fdf

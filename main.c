@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 10:50:04 by dsantama          #+#    #+#             */
-/*   Updated: 2021/06/02 11:18:19 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/06/14 11:11:12 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 int main(int argc, char **argv)
 {
-	parse		*parse;
-
-	parse = ((parse *)malloc(sizeof(parse)));
+	t_parse		*parse;
+	parse = ((t_parse *)malloc(sizeof(t_parse)));
 	if (!parse)
 		return (0);
 	if (argc == 2)
@@ -26,7 +25,10 @@ int main(int argc, char **argv)
 		printf("*** Introduce correctamente el archivo ***\n");
 		return (-1);
 	}
-	
+    parse->mlx = mlx_init();
+    parse->win = mlx_new_window(parse->mlx, 1920, 1080, "Hello world!");
+    puntos(10, 10, 600, 300, parse);
+    mlx_loop(parse->mlx);
 	int i;
 	int j;
 
@@ -36,7 +38,7 @@ int main(int argc, char **argv)
 		j = 0;
 		while (j < parse->width)
 		{
-			printf("%d", parse->punto[i][j])
+			printf("%3d", parse->punto[i][j]);
 			j++;
 		}
 		printf("\n");

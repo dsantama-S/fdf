@@ -6,13 +6,13 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 10:49:57 by dsantama          #+#    #+#             */
-/*   Updated: 2021/06/02 14:06:08 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/06/14 10:09:09 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static void		define_height(char *path)
+static int		define_height(char *path)
 {
 	char 	*line;
 	int		fd;
@@ -65,7 +65,7 @@ static void		get_map(int	*z, char *line)
 	free(nums);
 }
 
-void 			read_file(char *path, parse *parse)
+int 			read_file(char *path, t_parse *parse)
 {
 	int			fd;
 	char		*line;
@@ -74,9 +74,9 @@ void 			read_file(char *path, parse *parse)
 	i = 0;
 	parse->height = define_height(path);
 	parse->width = define_width(path);
-	parse->punto = (int **)malloc(sizeof(int*) * (data->height + 1));
+	parse->punto = (int **)malloc(sizeof(int*) * (parse->height + 1));
 	while(i <= parse->height)
-		parse->punto[i++] = (int *)malloc(sizeof(int) * (data->width + 1));
+		parse->punto[i++] = (int *)malloc(sizeof(int) * (parse->width + 1));
 	i = 0;
 	fd = open(path, O_RDONLY, 0);
 	if (fd == -1)
@@ -89,4 +89,5 @@ void 			read_file(char *path, parse *parse)
 	}
 	parse->punto[i] = NULL;
 	close(fd);
+	return (0);
 }

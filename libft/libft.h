@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 12:48:21 by dsantama          #+#    #+#             */
-/*   Updated: 2021/04/14 11:05:48 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/06/14 09:00:41 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ int					ft_tolower(int i);
 int					ft_istrdigit(char *str);
 int					ft_toupper(int i);
 int					ft_counter(char const *str, char c);
-char				**ft_strsplit(const char *str, char c);
+char				*ft_strsub(char const *s, unsigned int start, size_t len);
+char				**ft_strsplit(char const *s, char c);
 #endif

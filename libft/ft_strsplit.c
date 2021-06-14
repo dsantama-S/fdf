@@ -1,62 +1,68 @@
-static	int		ft_count_words(const char *str, char c)
-{
-	int	word;
-	int	i;
+#include <stdlib.h>
+#include "libft.h"
 
-	i = 0;
-	word = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-	{
-		if (str[i] == c && str[i + 1] != c)
-			word++;
-		i++;
-	}
-	if (str[0] != '\0')
-		word++;
-	return (word);
-}
-
-static	char	*ft_word(const char *str, char c, int *i)
-{
-	char	*s;
-	int		k;
-
-	if (!(s = (char *)malloc(sizeof(s) * (ft_strlen(str)))))
-		return (NULL);
-	k = 0;
-	while (str[*i] != c && str[*i])
-	{
-		s[k] = str[*i];
-		k++;
-		*i += 1;
-	}
-	s[k] = '\0';
-	while (str[*i] == c && str[*i])
-		*i += 1;
-	return (s);
-}
-
-char			**ft_strsplit(const char *str, char c)
+static int	ft_strsplit_words(char const *s, char c)
 {
 	int		i;
-	int		j;
-	int		wrd;
-	char	**s;
+	int		n;
+	int		m;
 
 	i = 0;
-	j = 0;
-	wrd = ft_count_words(str, c);
-	if (!(s = (char **)malloc(sizeof(s) * (ft_count_words(str, c) + 2))))
-		return (NULL);
-	while (str[i] == c && str[i])
-		i++;
-	while (j < wrd && str[i])
+	n = 0;
+	m = 0;
+	while (s[i] != '\0')
 	{
-		s[j] = ft_word(str, c, &i);
-		j++;
+		if ((s[i] == c) && (m == 1))
+			m = 0;
+		if ((m == 0) && (s[i] != c))
+		{
+			m = 1;
+			n++;
+		}
+		i++;
 	}
-	s[j] = NULL;
-	return (s);
+	return (n);
+}
+
+static int	ft_strsplit_len(char const *s, char c)
+{
+	int		i;
+	int		len;
+
+	i = 0;
+	len = 0;
+	while ((s[i] != c) && (s[i] != '\0'))
+	{
+		i++;
+		len++;
+	}
+	return (len);
+}
+
+char		**ft_strsplit(char const *s, char c)
+{
+	int		m;
+	int		words;
+	char	**finish;
+
+	m = 0;
+	if (s && *s)
+		words = ft_strsplit_words(s, c);
+	else
+		words = 0;
+	finish = (char **)malloc((words + 1) * sizeof(char *));
+	if (finish == NULL)
+		return (NULL);
+	while (words--)
+	{
+		while ((*s == c) && (*s != '\0'))
+			s++;
+		finish[m] = ft_strsub(s, 0, ft_strsplit_len(s, c));
+		if (finish[m] == NULL)
+			return (NULL);
+		s = s + ft_strsplit_len(s, c);
+		m++;
+	}
+	finish[m] = NULL;
+	return (finish);
 }
