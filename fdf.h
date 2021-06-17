@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 10:50:01 by dsantama          #+#    #+#             */
-/*   Updated: 2021/06/14 12:42:57 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/06/17 10:26:14 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,22 @@
 # include <stdarg.h>
 # include <math.h>
 
+# ifndef WIN_HEIGHT
+#  define WIN_HEIGHT 1080
+# endif
+
+# ifndef WIN_WIDTH
+#  define WIN_WIDTH 1920
+# endif
+
 typedef struct  s_parse {
 
     int         width;
     int         height;
 	int 		**punto;
     int			aumento;
+	int			x_mov;
+	int			y_mov;
     void        *mlx;
     void        *win;
 }               t_parse;
@@ -52,4 +62,6 @@ int 				read_file(char *path, t_parse *parse);
 int					get_next_line(int fd, char **line);
 void 				unir_puntos(float x, float y, float x1, float y1, t_parse *parse);
 void				print_puntos(t_parse *parse);
+int					movement(int keycode, t_parse *parse);
+
 #endif

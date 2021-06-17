@@ -6,7 +6,7 @@
 /*   By: dsantama <dsantama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/14 10:09:01 by dsantama          #+#    #+#             */
-/*   Updated: 2021/06/14 12:41:40 by dsantama         ###   ########.fr       */
+/*   Updated: 2021/06/17 10:43:40 by dsantama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ void 	unir_puntos(float x, float y, float x1, float y1, t_parse *parse)
 	y *= parse->aumento;
 	x1 *= parse->aumento;
 	y1 *= parse->aumento;
+
+	x += parse->x_mov;
+	y += parse->y_mov;
+	x1 += parse->x_mov;
+	y1 += parse->y_mov;
 	x_step = x1 - x;
 	y_step = y1 - y;
 	max = Mmax(mod(x_step), mod(y_step));
@@ -62,8 +67,10 @@ void	print_puntos(t_parse *parse)
 		x = 0;
 		while (x < parse->width)
 		{
-			unir_puntos(x, y, x + 1, y, parse);
-			unir_puntos(x, y, x, y + 1, parse);
+			if(x < parse->width - 1)
+				unir_puntos(x, y, x + 1, y, parse);
+			if(y < parse->height - 1)
+				unir_puntos(x, y, x, y + 1, parse);
 			x++;
 		}
 		y++;
